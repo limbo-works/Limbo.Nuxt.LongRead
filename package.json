@@ -1,0 +1,20 @@
+{
+  "name": "@limbo-works/long-read",
+  "type": "module",
+  "version": "0.0.1",
+  "main": "./nuxt.config.js",
+  "scripts": {
+    "dev": "nuxi dev .playground",
+    "build": "nuxt build .playground",
+    "generate": "nuxt generate .playground",
+    "preview": "nuxt preview .playground",
+    "prettier": "prettier \"**/*.{js,vue,md,yml,css,scss,json}\"",
+"lint": "yarn prettier --check . && yarn eslint --quiet .",
+"lint:fix": "yarn prettier --write . && yarn eslint --fix --quiet .",
+"test": "vitest"
+  },
+  "devDependencies": {
+    "@limbo-works/lint-configs": "^1.0.1",
+    "nuxt": "^3.6.2"
+  }
+}
