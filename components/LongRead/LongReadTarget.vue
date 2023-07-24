@@ -1,5 +1,5 @@
 <!--
-	Last modified: 2023/07/20 12:00:05
+	Last modified: 2023/07/24 09:20:30
 -->
 <template>
 	<div
@@ -70,12 +70,7 @@ export default {
 		},
 		metaData() {
 			if (LongRead.data._targets[this.containerId]) {
-				this.LongRead.data._targets[this.containerId]['metaData'] = this.metaData || {};
-				/* this.$set(
-					LongRead.data._targets[this.containerId],
-					'metaData',
-					this.metaData || {}
-				); */
+				LongRead.data._targets[this.containerId]['metaData'] = this.metaData || {};
 			}
 		},
 	},
@@ -93,7 +88,6 @@ export default {
 			const order = [];
 			let prevNode = this;
 			while (prevNode.$parent._) {
-				console.log('prevNode.$parent', prevNode.$parent);
 				const { children } = prevNode.$parent._.vnode;
 
 				!children?.length && order.push(0);
@@ -108,7 +102,7 @@ export default {
 
 			order.reverse();
 
-			this.LongRead.data._targets[this.containerId] = {
+			LongRead.data._targets[this.containerId] = {
 				id: this.containerId,
 				tocItemId: `${this.containerId}__toc-item`,
 				title: this.title,
@@ -118,25 +112,11 @@ export default {
 				metaData: this.metaData || {},
 				order,
 			};
-			console.log('this.LongRead.data', LongRead.data);
-
-			/* this.$set(LongRead.data?._targets, this.containerId, {
-				id: this.containerId,
-				tocItemId: `${this.containerId}__toc-item`,
-				title: this.title,
-				visibility: 0,
-				inViewport: false,
-				aboveViewport: false,
-				metaData: this.metaData || {},
-				order,
-			}); */
 		},
 
 		removeTarget(id = this.containerId) {
 			delete LongRead.data._targets[id];
-
-			this.LongRead.data._targets = { ...LongRead.data._targets };
-			//this.$set(LongRead.data, '_targets', { ...LongRead.data._targets }); // We need this for it to be reactive
+			LongRead.data._targets = { ...LongRead.data._targets }; // Still needed? We need this for it to be reactive
 		},
 	},
 };

@@ -3,7 +3,9 @@
 		<LongReadController>
 			<template #default="{ data, actions }">
 				<!-- Desktop -->
+				{{ data }}
 				<div
+					style="position: fixed; right: 30px; background: rgb(222, 211, 195); padding: 50px; color: rgb(110, 124, 107); !important "
 					:class="[
 						'c-long-read__desktop',
 						'hidden pointer-events-auto',
@@ -34,6 +36,7 @@
 									:key="`item-${index}`"
 								>
 									<a
+										style="color: rgb(110, 124, 107); !important"
 										:href="`#${target.id}`"
 										:class="[
 											'c-long-read__target relative',

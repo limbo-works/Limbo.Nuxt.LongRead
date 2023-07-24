@@ -1,5 +1,5 @@
 <!--
-	Last modified: 2023/07/20 11:45:15
+	Last modified: 2023/07/24 09:36:06
 -->
 <template>
 	<div class="c-long-read-controller">
@@ -71,7 +71,7 @@ export default {
 		return {
 			targetElements: [],
 			intersectionObserver: null,
-			data: {}
+
 		};
 	},
 
@@ -119,8 +119,6 @@ export default {
 
 	mounted() {
 		data._controllers.add(this);
-		console.log('data', data);
-		this.data._controllers = data._controllers;
 
 		this.onScroll();
 		window.addEventListener('scroll', this.onScroll);
@@ -129,8 +127,6 @@ export default {
 
 	beforeUnmount() {
 		data._controllers.delete(this);
-		this.data._controllers = data._controllers;
-		//this.$set(data, '_controllers', data._controllers);
 
 		this.intersectionObserver?.disconnect?.();
 		window.removeEventListener('scroll', this.onScroll);
@@ -140,6 +136,7 @@ export default {
 	methods: {
 		/** Events */
 		onScroll() {
+			console.log('this.targetElements', this.targetElements);
 			this.targetElements
 				.filter(
 					(target) => target && data._targets[target.id]?.inViewport
@@ -149,7 +146,6 @@ export default {
 					Object.assign(data._targets[target.id], {
 						visibility: percentage,
 					});
-					this.$set(data, '_targets', data._targets);
 				});
 		},
 
@@ -170,7 +166,6 @@ export default {
 					}
 				}
 			});
-			this.$set(data, '_targets', data._targets);
 		},
 
 		/** Actions */
