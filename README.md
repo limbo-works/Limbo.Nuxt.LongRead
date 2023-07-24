@@ -1,73 +1,39 @@
-# Nuxt Layer Starter
+# Long Read
 
-Create Nuxt extendable layer with this GitHub template.
-
-## Setup
-
-Make sure to install the dependencies:
-
-```bash
-pnpm install
+## Usage
+Setting up the long read menu
+```html
+<LongReadController>
+	<template #default="{ data, actions }">
+		<ul>
+			<li
+				v-for="(target, index) in data.targets"
+				:key="`item-${index}`"
+			>
+				<a
+					:href="`#${target.id}`"
+					:aria-current="
+						data.activeTarget.id === target.id
+					"
+					@click.prevent="
+						() =>
+							actions.scrollToTarget &&
+							actions.scrollToTarget(target)
+					"
+					v-text="target.title"
+				></a>
+			</li>
+		</ul>
+	</template>
+</LongReadController>
 ```
 
-## Working on your theme
-
-Your theme is at the root of this repository, it is exactly like a regular Nuxt project, except you can publish it on NPM.
-
-The `.playground` directory should help you on trying your theme during development.
-
-Running `pnpm dev` will prepare and boot `.playground` directory, which imports your theme itself.
-
-## Distributing your theme
-
-Your Nuxt layer is shaped exactly the same as any other Nuxt project, except you can publish it on NPM.
-
-To do so, you only have to check if `files` in `package.json` are valid, then run:
-
-```bash
-npm publish --access public
+Setting Up the Scroll Targets.
+```html
+<div id="title1" >
+	<LongReadTarget
+		container-id="title1"
+		title="title 1"
+	/>
+</div>
 ```
-
-Once done, your users will only have to run:
-
-```bash
-npm install --save your-theme
-```
-
-Then add the dependency to their `extends` in `nuxt.config`:
-
-```ts
-defineNuxtConfig({
-  extends: 'your-theme'
-})
-```
-
-## Development Server
-
-Start the development server on http://localhost:3000
-
-```bash
-pnpm dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-pnpm build
-```
-
-Or statically generate it with:
-
-```bash
-pnpm generate
-```
-
-Locally preview production build:
-
-```bash
-pnpm preview
-```
-
-Checkout the [deployment documentation](https://v3.nuxtjs.org/docs/deployment) for more information.
