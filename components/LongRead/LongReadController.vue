@@ -1,5 +1,5 @@
 <!--
-	Last modified: 2023/07/24 09:36:06
+	Last modified: 2023/11/02 09:42:59
 -->
 <template>
 	<div class="c-long-read-controller">
@@ -71,7 +71,6 @@ export default {
 		return {
 			targetElements: [],
 			intersectionObserver: null,
-
 		};
 	},
 
@@ -136,7 +135,6 @@ export default {
 	methods: {
 		/** Events */
 		onScroll() {
-			console.log('this.targetElements', this.targetElements);
 			this.targetElements
 				.filter(
 					(target) => target && data._targets[target.id]?.inViewport
