@@ -1,6 +1,3 @@
-<!--
-	Last modified: 2023/11/02 09:42:59
--->
 <template>
 	<div class="c-long-read-controller">
 		<slot v-bind="slotBindings"></slot>
@@ -66,6 +63,14 @@ export const data = reactive({
 /** Component */
 export default {
 	name: 'LongReadController',
+
+	provide() {
+		return {
+			longReadController: { data, actions: {
+				scrollToTarget: this.scrollToTarget,
+			} },
+		};
+	},
 
 	data() {
 		return {

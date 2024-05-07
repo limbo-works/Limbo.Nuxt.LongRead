@@ -1,6 +1,3 @@
-<!--
-	Last modified: 2023/07/24 09:20:30
--->
 <template>
 	<div
 		v-if="
