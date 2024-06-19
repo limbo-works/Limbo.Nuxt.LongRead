@@ -5,12 +5,13 @@
 </template>
 
 <script>
-import { reactive } from 'vue';
+import { reactive, watch } from 'vue';
 
 /** Data */
 export const data = reactive({
 	_controllers: new Set(),
 	_targets: {},
+	_activeTarget: null,
 	_latest: null,
 
 	get controllers() {
@@ -36,29 +37,75 @@ export const data = reactive({
 	},
 
 	get activeTarget() {
+		return this._activeTarget;
+	},
+
+	/* Trigger an update manually */
+	update() {
+		// Update relation to viewport
+		data.targets.forEach((target) => {
+			const targetEl = target?.id && document.getElementById(target.id);
+			if (targetEl) {
+				const targetRect = targetEl.getBoundingClientRect();
+
+				const isIntersecting =
+					(targetRect.top >= 0 &&
+						targetRect.top < window.innerHeight) ||
+					(targetRect.bottom >= 0 &&
+						targetRect.bottom < window.innerHeight) ||
+					(targetRect.top < 0 &&
+						targetRect.bottom >= window.innerHeight);
+
+				if (!isIntersecting) {
+					const { bottom = 0 } =
+						targetEl.getBoundingClientRect?.() || {};
+					target.visibility = 0;
+					target.aboveViewport = bottom < window.innerHeight / 2;
+					target.inViewport = false;
+				} else {
+					const percentage =
+						(targetRect.top < 0
+							? targetRect.bottom
+							: window.innerHeight - targetRect.top) /
+						(targetRect.height || 1);
+					target.visibility = Math.max(0, Math.min(1, percentage));
+					target.aboveViewport = false;
+					target.inViewport = true;
+				}
+			}
+		});
+	},
+});
+
+watch(
+	() => data.targets,
+	() => {
 		// Remove any lingering targets from other pages
-		if (this._latest && this.targets.indexOf(this._latest) === -1) {
-			this._latest = null;
+		if (data._latest && data.targets.indexOf(data._latest) === -1) {
+			data._latest = null;
 		}
 
-		let target = [...this.targets].reverse().reduce((acc, target) => {
+		let target = [...data.targets].reverse().reduce((acc, target) => {
 			return (target?.visibility ?? 0) >= (acc?.visibility ?? 0.00001) &&
 				target?.title?.length
 				? target
 				: acc;
 		}, null);
+
 		if (!target) {
 			// Find first target above the viewport
-			target = [...this.targets].reverse().find((target) => {
+			target = [...data.targets].reverse().find((target) => {
 				return target?.aboveViewport && target?.title?.length;
 			});
 		}
 
-		target = target ?? this._latest ?? this.targets[0];
-		this._latest = target;
-		return target;
+		target = target ?? data._latest ?? data.targets[0];
+		data._latest = target;
+
+		data._activeTarget = target;
 	},
-});
+	{ immediate: true, deep: true }
+);
 
 /** Component */
 export default {
@@ -66,9 +113,13 @@ export default {
 
 	provide() {
 		return {
-			longReadController: { data, actions: {
-				scrollToTarget: this.scrollToTarget,
-			} },
+			longReadController: {
+				data,
+				actions: {
+					scrollToTarget: this.scrollToTarget,
+					update: this.update,
+				},
+			},
 		};
 	},
 
@@ -96,6 +147,7 @@ export default {
 
 				actions: {
 					scrollToTarget: this.scrollToTarget,
+					update: data.update,
 				},
 			};
 		},
