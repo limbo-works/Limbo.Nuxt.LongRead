@@ -48,15 +48,6 @@ export default {
 			default: () => ({}),
 		},
 	},
-	data() {
-		return {
-			LongRead: {
-				data: {
-					_targets: {}
-				}
-			}
-		};
-	},
 	watch: {
 		disabled(value) {
 			this[value ? 'removeTarget' : 'addTarget']();
@@ -82,22 +73,22 @@ export default {
 
 	methods: {
 		addTarget() {
+			// In Vue 3, we'll use a simpler approach for ordering
+			// by using the creation time and DOM position
 			const order = [];
-			let prevNode = this;
-			while (prevNode.$parent._) {
-				const { children } = prevNode.$parent._.vnode;
-
-				!children?.length && order.push(0);
-				children?.length &&
-					children?.forEach((child, index) => {
-						child.componentInstance?._uid === prevNode._uid &&
-							order.push(index);
-					});
-
-				prevNode = prevNode.$parent;
+			
+			// Try to find the position based on DOM order
+			const allTargets = document.querySelectorAll('.c-long-read-target');
+			const thisElement = this.$el;
+			
+			if (thisElement && allTargets.length > 0) {
+				// Find the index of this element among all targets
+				const index = Array.from(allTargets).indexOf(thisElement);
+				order.push(index >= 0 ? index : Object.keys(LongRead.data._targets).length);
+			} else {
+				// Fallback: use the number of existing targets as order
+				order.push(Object.keys(LongRead.data._targets).length);
 			}
-
-			order.reverse();
 
 			LongRead.data._targets[this.containerId] = {
 				id: this.containerId,

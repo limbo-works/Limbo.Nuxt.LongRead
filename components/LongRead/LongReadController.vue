@@ -60,7 +60,7 @@ export const data = reactive({
 					const { bottom = 0 } =
 						targetEl.getBoundingClientRect?.() || {};
 					target.visibility = 0;
-					target.aboveViewport = bottom < window.innerHeight / 2;
+					target.aboveViewport = Math.min(280, bottom < window.innerHeight / 3);
 					target.inViewport = false;
 				} else {
 					const percentage =
@@ -179,6 +179,8 @@ export default {
 		this.onScroll();
 		window.addEventListener('scroll', this.onScroll);
 		window.addEventListener('resize', this.onScroll);
+
+		data.update();
 	},
 
 	beforeUnmount() {
@@ -245,13 +247,21 @@ export default {
 			const { height, width, left, top } =
 				element.getBoundingClientRect();
 
-			const l = Math.max(0, left);
-			const t = Math.max(0, top);
-			const r = Math.min(window.innerWidth, left + width);
-			const b = Math.min(window.innerHeight, top + height);
+			// Calculate the visible area of the element
+			const visibleLeft = Math.max(0, left);
+			const visibleTop = Math.max(0, top);
+			const visibleRight = Math.min(window.innerWidth, left + width);
+			const visibleBottom = Math.min(window.innerHeight, top + height);
 
-			const ip = ((l - r) * (t - b)) / (width * height);
-			return Math.max(Math.min(ip, 1), 0);
+			// Calculate visible dimensions
+			const visibleWidth = Math.max(0, visibleRight - visibleLeft);
+			const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+
+			// Calculate percentage of element that is visible
+			const visibleArea = visibleWidth * visibleHeight;
+			const totalArea = width * height;
+
+			return totalArea > 0 ? visibleArea / totalArea : 0;
 		},
 	},
 };
