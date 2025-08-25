@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.0](https://github.com/limbo-works/Limbo.Nuxt.LongRead/compare/v1.1.0...v1.2.0) (2025-08-25)
+
+
+### Features
+
+* manually overwriting some updates ([9ae5c18](https://github.com/limbo-works/Limbo.Nuxt.LongRead/commit/9ae5c180694c59bae8f15f26577e109b689429fc))
+
+
+### Bug Fixes
+
+* slightly adjust none-intersecting target.aboveviewport and updated page to test different heights ([712f4dd](https://github.com/limbo-works/Limbo.Nuxt.LongRead/commit/712f4dd607c1b0d49522ed2150f3a353c1dd2998))
+
 ## [1.1.0](https://github.com/limbo-works/Limbo.Nuxt.LongRead/compare/v1.0.0...v1.1.0) (2024-06-19)
 
 
