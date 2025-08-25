@@ -1,4 +1,2 @@
-module.exports = {
-	root: true,
-	extends: ['./node_modules/@limbo-works/lint-configs/.eslintrc.simple.cjs'],
-};
+import config from '@limbo-works/lint-configs/eslint.config.mjs';
+export default [...config];

@@ -60,7 +60,7 @@ export const data = reactive({
 					const { bottom = 0 } =
 						targetEl.getBoundingClientRect?.() || {};
 					target.visibility = 0;
-					target.aboveViewport = bottom < window.innerHeight / 2;
+					target.aboveViewport = Math.min(320, bottom < window.innerHeight / 3);
 					target.inViewport = false;
 				} else {
 					const percentage =
@@ -179,6 +179,8 @@ export default {
 		this.onScroll();
 		window.addEventListener('scroll', this.onScroll);
 		window.addEventListener('resize', this.onScroll);
+
+		data.update();
 	},
 
 	beforeUnmount() {
