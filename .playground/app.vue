@@ -39,7 +39,7 @@
 									@mouseout="$event.target.style.backgroundColor = data.activeTarget?.id === target.id ? 'rgb(110, 124, 107)' : 'transparent'"
 								>
 									<span>{{ target.title }}</span>
-									<span 
+									<span
 										style="font-size: 12px; opacity: 0.8; background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 10px;"
 									>
 										{{ Math.round(target.visibility * 100) }}%
@@ -60,20 +60,20 @@
 
 		<!-- Content Sections -->
 		<div style="max-width: 800px; margin: 0 auto; padding: 20px;">
-			<section id="introduction" style="min-height: 100vh; padding: 40px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 8px; margin-bottom: 20px;">
+			<section id="introduction" style="min-height: 10vh; padding: 40px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 8px; margin-bottom: 20px;">
 				<LongReadTarget
 					container-id="introduction"
 					title="Introduction"
 					:meta-data="{ difficulty: 'beginner', estimatedTime: '5 minutes' }"
 				/>
 				<h1 style="font-size: 3rem; margin-bottom: 20px;">Introduction</h1>
-				<p style="font-size: 1.2rem; line-height: 1.6; margin-bottom: 20px;">
+				<!-- <p style="font-size: 1.2rem; line-height: 1.6; margin-bottom: 20px;">
 					Welcome to this comprehensive guide. This section introduces the main concepts
 					and provides an overview of what you'll learn.
 				</p>
 				<p style="line-height: 1.6; margin-bottom: 20px;">
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor 
-					incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis 
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+					incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
 					nostrud exercitation ullamco laboris.
 				</p>
 				<div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 8px; margin: 20px 0;">
@@ -83,16 +83,16 @@
 						<li>Setting up your environment</li>
 						<li>Best practices and conventions</li>
 					</ul>
-				</div>
+				</div> -->
 			</section>
 
-			<section id="getting-started" style="min-height: 100vh; padding: 40px 20px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border-radius: 8px; margin-bottom: 20px;">
+			<section id="getting-started" style="min-height: 5vh; padding: 40px 20px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border-radius: 8px; margin-bottom: 20px;">
 				<LongReadTarget
 					container-id="getting-started"
 					title="Getting Started"
 					:meta-data="{ difficulty: 'beginner', estimatedTime: '10 minutes' }"
 				/>
-				<h1 style="font-size: 3rem; margin-bottom: 20px;">Getting Started</h1>
+				<!-- <h1 style="font-size: 3rem; margin-bottom: 20px;">Getting Started</h1>
 				<p style="font-size: 1.2rem; line-height: 1.6; margin-bottom: 20px;">
 					Now that you understand the basics, let's dive into the practical implementation.
 					This section will guide you through the initial setup process.
@@ -105,10 +105,10 @@
 				<p style="line-height: 1.6; margin-bottom: 20px;">
 					Follow these steps to configure your project. The process is straightforward
 					and should take only a few minutes to complete.
-				</p>
+				</p> -->
 			</section>
 
-			<section id="advanced-features" style="min-height: 100vh; padding: 40px 20px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; border-radius: 8px; margin-bottom: 20px;">
+			<section id="advanced-features" style="min-height: 50vh; padding: 40px 20px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; border-radius: 8px; margin-bottom: 20px;">
 				<LongReadTarget
 					container-id="advanced-features"
 					title="Advanced Features"
@@ -152,7 +152,7 @@
 				</div>
 			</section>
 
-			<section id="conclusion" style="min-height: 100vh; padding: 40px 20px; background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); color: #333; border-radius: 8px;">
+			<section id="conclusion" style="min-height: 75vh; padding: 40px 20px; background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); color: #333; border-radius: 8px;">
 				<LongReadTarget
 					container-id="conclusion"
 					title="Conclusion"
@@ -177,5 +177,7 @@
 				</div>
 			</section>
 		</div>
+		<div style="height: 100vh; padding:80px;">this be the undubious doubleuioius footer</div>
+
 	</div>
 </template>

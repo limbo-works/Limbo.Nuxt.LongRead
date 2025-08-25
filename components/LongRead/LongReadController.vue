@@ -60,7 +60,7 @@ export const data = reactive({
 					const { bottom = 0 } =
 						targetEl.getBoundingClientRect?.() || {};
 					target.visibility = 0;
-					target.aboveViewport = Math.min(320, bottom < window.innerHeight / 3);
+					target.aboveViewport = Math.min(280, bottom < window.innerHeight / 3);
 					target.inViewport = false;
 				} else {
 					const percentage =
