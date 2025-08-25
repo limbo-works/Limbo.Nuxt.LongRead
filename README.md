@@ -13,7 +13,7 @@ A Vue 3/Nuxt 3 component for creating table of contents with automatic scroll tr
 ## Installation
 
 ```bash
-npm install @limbo-works/long-read
+yarn add @limbo-works/long-read
 ```
 
 ## Basic Usage
@@ -284,11 +284,7 @@ const filteredTargets = computed((data) => {
 
 - Vue 3.x
 - Nuxt 3.x
-- Modern browsers with Intersection Observer support
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
+- Browsers with Intersection Observer support
 
 ## License
 
