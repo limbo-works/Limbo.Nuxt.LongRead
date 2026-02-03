@@ -1,8 +1,6 @@
 <template>
 	<div
-		v-if="
-			$slots.default || Object.entries($attrs).length || linkToToc
-		"
+		v-if="$slots.default || Object.entries($attrs).length || linkToToc"
 		class="c-long-read-target"
 	>
 		<LongReadTargetTocLink
@@ -58,7 +56,8 @@ export default {
 		},
 		metaData() {
 			if (LongRead.data._targets[this.containerId]) {
-				LongRead.data._targets[this.containerId]['metaData'] = this.metaData || {};
+				LongRead.data._targets[this.containerId]['metaData'] =
+					this.metaData || {};
 			}
 		},
 	},
@@ -76,15 +75,19 @@ export default {
 			// In Vue 3, we'll use a simpler approach for ordering
 			// by using the creation time and DOM position
 			const order = [];
-			
+
 			// Try to find the position based on DOM order
 			const allTargets = document.querySelectorAll('.c-long-read-target');
 			const thisElement = this.$el;
-			
+
 			if (thisElement && allTargets.length > 0) {
 				// Find the index of this element among all targets
 				const index = Array.from(allTargets).indexOf(thisElement);
-				order.push(index >= 0 ? index : Object.keys(LongRead.data._targets).length);
+				order.push(
+					index >= 0
+						? index
+						: Object.keys(LongRead.data._targets).length
+				);
 			} else {
 				// Fallback: use the number of existing targets as order
 				order.push(Object.keys(LongRead.data._targets).length);

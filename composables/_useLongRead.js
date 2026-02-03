@@ -28,10 +28,16 @@ export default function useLongRead(key) {
 	function registerTargets(targets) {
 		const id = state.targetListIndex++;
 
-		const unregisterWatcher = watch(() => toValue(targets), (targets) => {
-			targets = (Array.isArray(targets) ? targets : [targets]).filter(Boolean);
-			console.log('Registering targets for long read:', targets);
-		}, { immediate: true, deep: true });
+		const unregisterWatcher = watch(
+			() => toValue(targets),
+			(targets) => {
+				targets = (Array.isArray(targets) ? targets : [targets]).filter(
+					Boolean
+				);
+				console.log('Registering targets for long read:', targets);
+			},
+			{ immediate: true, deep: true }
+		);
 
 		// To follow the general convention of Vue, we return an unregister function
 		return function unregisterTargets() {

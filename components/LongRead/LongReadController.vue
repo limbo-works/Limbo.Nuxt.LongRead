@@ -12,6 +12,9 @@ export const data = reactive({
 	_targets: {},
 	_activeTarget: null,
 	_latest: null,
+	_viewThreshold: undefined,
+	_viewThresholdMinPx: 0,
+	_viewThresholdMaxPx: Infinity,
 
 	get targets() {
 		const keys = Object.keys(this._targets);
@@ -56,7 +59,10 @@ export const data = reactive({
 					const { bottom = 0 } =
 						targetEl.getBoundingClientRect?.() || {};
 					target.visibility = 0;
-					target.aboveViewport = Math.min(280, bottom < window.innerHeight / 3);
+					target.aboveViewport = Math.min(
+						280,
+						bottom < window.innerHeight / 3
+					);
 					target.inViewport = false;
 				} else {
 					const percentage =
@@ -71,6 +77,15 @@ export const data = reactive({
 			}
 		});
 	},
+
+	setViewThreshold(
+		threshold,
+		{ minPx = 0, maxPx = Infinity } = {}
+	) {
+		this._viewThreshold = threshold;
+		this._viewThresholdMinPx = minPx;
+		this._viewThresholdMaxPx = maxPx;
+	},
 });
 
 watch(
@@ -81,12 +96,30 @@ watch(
 			data._latest = null;
 		}
 
-		let target = [...data.targets].reverse().reduce((acc, target) => {
-			return (target?.visibility ?? 0) >= (acc?.visibility ?? 0.00001) &&
-				target?.title?.length
-				? target
-				: acc;
-		}, null);
+		let target;
+		if (typeof data._viewThreshold !== 'number') {
+			target = [...data.targets].reverse().reduce((acc, target) => {
+				return (target?.visibility ?? 0) >=
+					(acc?.visibility ?? 0.00001) && target?.title?.length
+					? target
+					: acc;
+			}, null);
+		} else {
+			target = [...data.targets]
+				.filter((t) => t?.title?.length)
+				.findLast(
+					(t) =>
+						t.top <
+						window.scrollY +
+							Math.max(
+								data._viewThresholdMinPx,
+								Math.min(
+									window.innerHeight * data._viewThreshold,
+									data._viewThresholdMaxPx
+								)
+							)
+				);
+		}
 
 		if (!target) {
 			// Find first target above the viewport
