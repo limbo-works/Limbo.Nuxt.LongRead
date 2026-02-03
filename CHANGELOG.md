@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/limbo-works/Limbo.Nuxt.LongRead/compare/v1.2.0...v1.3.0) (2026-02-03)
+
+
+### Features
+
+* fixed some ordering and also started work on a composable ([56c3113](https://github.com/limbo-works/Limbo.Nuxt.LongRead/commit/56c3113029535ea3087159856e385fb5691e02dd))
+
 ## [1.2.0](https://github.com/limbo-works/Limbo.Nuxt.LongRead/compare/v1.1.0...v1.2.0) (2025-08-25)
 
 
