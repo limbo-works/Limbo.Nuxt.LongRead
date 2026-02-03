@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/limbo-works/Limbo.Nuxt.LongRead/compare/v1.4.0...v1.5.0) (2026-02-03)
+
+
+### Features
+
+* made setting more applicable ([c5be88b](https://github.com/limbo-works/Limbo.Nuxt.LongRead/commit/c5be88bb13e99e66eb3918d76b35c4947f1734f4))
+
 ## [1.4.0](https://github.com/limbo-works/Limbo.Nuxt.LongRead/compare/v1.3.0...v1.4.0) (2026-02-03)
 
 
