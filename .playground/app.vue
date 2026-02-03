@@ -181,3 +181,14 @@
 
 	</div>
 </template>
+
+
+<script setup>
+const { controller, registerTargets } = useLongRead('demo-playground');
+
+registerTargets(() => {
+	return [];
+});
+
+console.log(controller);
+</script>

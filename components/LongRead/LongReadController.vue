@@ -9,31 +9,27 @@ import { reactive, watch } from 'vue';
 
 /** Data */
 export const data = reactive({
-	_controllers: new Set(),
 	_targets: {},
 	_activeTarget: null,
 	_latest: null,
 
-	get controllers() {
-		return [...this._controllers];
-	},
-
 	get targets() {
 		const keys = Object.keys(this._targets);
-		keys.sort((a, b) => {
-			const aOrder = this._targets[a].order;
-			const bOrder = this._targets[b].order;
 
-			for (let n = 0; n < Math.min(aOrder?.length, bOrder?.length); n++) {
-				if (aOrder[n] !== bOrder[n]) {
-					return (aOrder[n] > bOrder[n]) * 2 - 1;
-				}
-			}
+		return keys
+			.map((key) => {
+				const target = this._targets[key];
+				const el =
+					typeof document !== 'undefined' &&
+					document.getElementById(target.id);
+				if (!el) return { ...target, top: Infinity };
 
-			return 0;
-		});
-
-		return keys.map((e) => this._targets[e]);
+				const topPosition = Math.floor(
+					el.getBoundingClientRect().top + window.scrollY
+				);
+				return { ...target, top: topPosition };
+			})
+			.sort((a, b) => a.top - b.top);
 	},
 
 	get activeTarget() {
@@ -174,8 +170,6 @@ export default {
 	},
 
 	mounted() {
-		data._controllers.add(this);
-
 		this.onScroll();
 		window.addEventListener('scroll', this.onScroll);
 		window.addEventListener('resize', this.onScroll);
@@ -184,8 +178,6 @@ export default {
 	},
 
 	beforeUnmount() {
-		data._controllers.delete(this);
-
 		this.intersectionObserver?.disconnect?.();
 		window.removeEventListener('scroll', this.onScroll);
 		window.removeEventListener('resize', this.onScroll);
