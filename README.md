@@ -105,7 +105,7 @@ The main controller component that provides table of contents data and actions.
 | Property  | Type   | Description                                              |
 | --------- | ------ | -------------------------------------------------------- |
 | `data`    | Object | Contains `targets` array and `activeTarget` object       |
-| `actions` | Object | Contains `scrollToTarget` function and `update` function |
+| `actions` | Object | Contains `setViewportThreshold` function, `scrollToTarget` function and `update` function |
 
 #### Data Properties
 
@@ -135,9 +135,48 @@ Each target object contains:
 
 - **`actions.update()`** - Manually trigger visibility calculations
 
+- **`actions.setViewThreshold(threshold, options?)`** - Configure the threshold at which the active target changes
+    - `threshold`: Percentage of viewport height (0-1) at which to gauge targets
+    - `options.minPx`: Minimum threshold in pixels (default: 0)
+    - `options.maxPx`: Maximum threshold in pixels (default: Infinity)
+
 #### View Threshold Configuration
 
-The controller exposes a `setViewThreshold` method on the reactive `data` object that allows you to configure the threshold at which the active target changes. This is useful when you want more control over when sections become "active" during scrolling.
+The `setViewThreshold` action allows you to configure the threshold at which the active target changes. This is useful when you want more control over when sections become "active" during scrolling.
+
+```vue
+<template>
+	<LongReadController>
+		<template #default="{ actions }">
+			<!-- Set threshold on mount or as needed -->
+			<button @click="actions.setViewThreshold(0.5)">
+				Set 50% threshold
+			</button>
+		</template>
+	</LongReadController>
+</template>
+```
+
+You can also call the method directly on the component via a template ref:
+
+```vue
+<script setup>
+const longReadRef = ref(null);
+
+onMounted(() => {
+	// Set threshold to 50% of viewport height with min/max constraints
+	longReadRef.value.setViewThreshold(0.5, { minPx: 100, maxPx: 400 });
+});
+</script>
+
+<template>
+	<LongReadController ref="longReadRef">
+		<!-- ... -->
+	</LongReadController>
+</template>
+```
+
+Or import the reactive `data` object directly:
 
 ```javascript
 import { data } from '@limbo-works/long-read/components/LongRead/LongReadController.vue';

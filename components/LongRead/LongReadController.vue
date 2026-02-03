@@ -145,6 +145,7 @@ export default {
 			longReadController: {
 				data,
 				actions: {
+					setViewThreshold: this.setViewThreshold,
 					scrollToTarget: this.scrollToTarget,
 					update: this.update,
 				},
@@ -175,6 +176,7 @@ export default {
 				},
 
 				actions: {
+					setViewThreshold: this.setViewThreshold,
 					scrollToTarget: this.scrollToTarget,
 					update: data.update,
 				},
@@ -251,6 +253,12 @@ export default {
 		},
 
 		/** Actions */
+		setViewThreshold(
+			...args
+		) {
+			return data.setViewThreshold(...args);
+		},
+
 		scrollToTarget(target, { setHash = true } = {}) {
 			setHash && history.replaceState({}, '', `#${target.id}`);
 			try {
