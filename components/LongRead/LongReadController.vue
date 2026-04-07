@@ -78,10 +78,7 @@ export const data = reactive({
 		});
 	},
 
-	setViewThreshold(
-		threshold,
-		{ minPx = 0, maxPx = Infinity } = {}
-	) {
+	setViewThreshold(threshold, { minPx = 0, maxPx = Infinity } = {}) {
 		this._viewThreshold = threshold;
 		this._viewThresholdMinPx = minPx;
 		this._viewThresholdMaxPx = maxPx;
@@ -253,9 +250,7 @@ export default {
 		},
 
 		/** Actions */
-		setViewThreshold(
-			...args
-		) {
+		setViewThreshold(...args) {
 			return data.setViewThreshold(...args);
 		},
 
